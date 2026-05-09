@@ -1,6 +1,7 @@
 'use client';
 
 import { motion, AnimatePresence } from 'framer-motion';
+import { useEffect, useState } from 'react';
 import { WeatherType, ActivityType } from '@/lib/types';
 
 interface AdaptiveBackgroundProps {
@@ -10,6 +11,18 @@ interface AdaptiveBackgroundProps {
 }
 
 export default function AdaptiveBackground({ weather, activities = [], duration = 7 }: AdaptiveBackgroundProps) {
+  const [windowWidth, setWindowWidth] = useState(1200); // Default for SSR
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+    setWindowWidth(window.innerWidth);
+    
+    const handleResize = () => setWindowWidth(window.innerWidth);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   const weatherThemes = {
     sunny: {
       gradient: 'from-amber-950/40 via-gray-900 to-gray-950',
@@ -50,7 +63,10 @@ export default function AdaptiveBackground({ weather, activities = [], duration 
   const activityAccent = primaryActivity ? activityAccents[primaryActivity] : '';
   
   const intensityScale = duration > 10 ? 1.2 : duration < 3 ? 0.7 : 1;
-  const glowSize = 400 * intensityScale;
+  const baseGlowSize = 400 * intensityScale;
+  const isMobile = windowWidth < 768;
+  const glowSize = isMobile ? Math.min(baseGlowSize, windowWidth * 0.6) : baseGlowSize;
+  const rainDropCount = isMobile ? 10 : 20;
 
   return (
     <div className="fixed inset-0 -z-10 overflow-hidden">
@@ -83,8 +99,8 @@ export default function AdaptiveBackground({ weather, activities = [], duration 
         transition={{ duration: 0.8 }}
         className={`absolute top-1/4 left-1/4 rounded-full blur-2xl sm:blur-3xl animate-pulse-glow ${theme.glow1}`}
         style={{ 
-          width: Math.min(glowSize, window?.innerWidth ? window.innerWidth * 0.6 : glowSize), 
-          height: Math.min(glowSize, window?.innerWidth ? window.innerWidth * 0.6 : glowSize) 
+          width: glowSize, 
+          height: glowSize 
         }}
       />
 
@@ -97,8 +113,8 @@ export default function AdaptiveBackground({ weather, activities = [], duration 
         transition={{ duration: 0.8, delay: 0.2 }}
         className={`absolute bottom-1/4 right-1/4 rounded-full blur-2xl sm:blur-3xl animate-pulse-glow ${theme.glow2}`}
         style={{ 
-          width: Math.min(glowSize * 0.8, window?.innerWidth ? window.innerWidth * 0.5 : glowSize * 0.8), 
-          height: Math.min(glowSize * 0.8, window?.innerWidth ? window.innerWidth * 0.5 : glowSize * 0.8), 
+          width: glowSize * 0.8, 
+          height: glowSize * 0.8, 
           animationDelay: '2s' 
         }}
       />
@@ -118,20 +134,20 @@ export default function AdaptiveBackground({ weather, activities = [], duration 
       </AnimatePresence>
 
       {/* Rain effect for rainy weather */}
-      {weather === 'rainy' && (
+      {weather === 'rainy' && isMounted && (
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           className="absolute inset-0 opacity-20"
         >
-          {[...Array(window?.innerWidth && window.innerWidth < 768 ? 10 : 20)].map((_, i) => (
+          {[...Array(rainDropCount)].map((_, i) => (
             <motion.div
               key={i}
               className="absolute w-px bg-gradient-to-b from-transparent via-blue-400/30 to-transparent"
               style={{
                 left: `${(i * 10) % 100}%`,
-                height: window?.innerWidth && window.innerWidth < 768 ? '60px' : '100px',
+                height: isMobile ? '60px' : '100px',
               }}
               animate={{
                 y: ['0vh', '100vh'],
