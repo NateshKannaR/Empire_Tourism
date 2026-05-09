@@ -127,13 +127,6 @@ export default function MapView({ destinations, selected, route, onSelect }: Map
   }, [route, destinations]);
 
   return (
-    <>
-      {/* Leaflet CSS */}
-      <link
-        rel="stylesheet"
-        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-      />
-      <div ref={containerRef} className="flex-1 z-10" style={{ minHeight: 0 }} />
-    </>
+    <div ref={containerRef} className="flex-1 z-10" style={{ minHeight: 0 }} />
   );
 }

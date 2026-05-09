@@ -34,10 +34,10 @@ module.exports = {
         },
       },
       fontFamily: {
-      sans: ['Inter', 'sans-serif'],
-      display: ['Inter', 'sans-serif'],
-    },
-    animation: {
+        sans: ['Inter', 'sans-serif'],
+        display: ['Inter', 'sans-serif'],
+      },
+      animation: {
         'float-slow': 'float-slow 7s ease-in-out infinite',
         'float-fast': 'float-fast 4s ease-in-out infinite',
         'spin-slow': 'spin-slow 20s linear infinite',
