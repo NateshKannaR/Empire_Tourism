@@ -240,7 +240,7 @@ export function StickyParallax({ children, startOffset = "0%", endOffset = "0%",
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: ref,
-    offset: [startOffset, endOffset]
+    offset: [startOffset, endOffset] as any
   });
 
   const scale = useTransform(scrollYProgress, [0, 1], [1, 1.1]);
