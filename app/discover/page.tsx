@@ -48,16 +48,16 @@ export default function DiscoverPage() {
     });
 
   return (
-    <main className="min-h-screen pt-16 bg-[#030712]">
+    <main className="min-h-screen pt-14 sm:pt-16 bg-[#030712] safe-area-top">
       {/* Header */}
-      <div className="relative py-20 px-6 overflow-hidden">
+      <div className="relative section-mobile overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-violet-600/10 via-transparent to-transparent" />
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:60px_60px]" />
-        <div className="relative z-10 max-w-4xl mx-auto text-center">
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:40px_40px] sm:bg-[size:60px_60px]" />
+        <div className="relative z-10 container-mobile text-center">
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-5xl font-black mb-4"
+            className="mobile-text-3xl font-black mb-4"
           >
             Discover <span className="bg-gradient-to-r from-violet-400 to-pink-400 bg-clip-text text-transparent">Destinations</span>
           </motion.h1>
@@ -65,7 +65,7 @@ export default function DiscoverPage() {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="text-gray-400 text-lg mb-8"
+            className="text-gray-400 mobile-text-lg mb-6 sm:mb-8"
           >
             Explore 10,000+ destinations across 180 countries
           </motion.p>
@@ -75,16 +75,18 @@ export default function DiscoverPage() {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="flex items-center gap-3 p-2 rounded-2xl bg-white/[0.06] border border-white/10 backdrop-blur-xl max-w-xl mx-auto"
+            className="flex flex-col sm:flex-row items-center gap-3 p-2 mobile-rounded bg-white/[0.06] border border-white/10 backdrop-blur-xl max-w-xl mx-auto"
           >
-            <Search className="w-5 h-5 text-gray-400 ml-3 flex-shrink-0" />
-            <input
-              value={query}
-              onChange={e => setQuery(e.target.value)}
-              placeholder="Search destinations, countries..."
-              className="flex-1 bg-transparent text-gray-100 placeholder-gray-500 focus:outline-none text-sm"
-            />
-            <button className="px-4 py-2 rounded-xl bg-gradient-to-r from-violet-500 to-pink-500 text-white text-sm font-semibold flex items-center gap-1">
+            <div className="flex items-center gap-3 flex-1 w-full">
+              <Search className="w-4 h-4 sm:w-5 sm:h-5 text-gray-400 ml-3 flex-shrink-0" />
+              <input
+                value={query}
+                onChange={e => setQuery(e.target.value)}
+                placeholder="Search destinations, countries..."
+                className="flex-1 bg-transparent text-gray-100 placeholder-gray-500 focus:outline-none text-sm sm:text-base"
+              />
+            </div>
+            <button className="w-full sm:w-auto btn-mobile bg-gradient-to-r from-violet-500 to-pink-500 text-white">
               <Filter className="w-4 h-4" /> Filter
             </button>
           </motion.div>
@@ -92,48 +94,50 @@ export default function DiscoverPage() {
       </div>
 
       {/* Categories + Sort */}
-      <div className="px-6 mb-8">
-        <div className="max-w-7xl mx-auto space-y-4">
-          <div className="flex gap-3 overflow-x-auto no-scrollbar pb-2">
+      <div className="mobile-px mb-6 sm:mb-8">
+        <div className="container-mobile space-y-4">
+          <div className="flex gap-2 sm:gap-3 overflow-x-auto no-scrollbar pb-2">
             {categories.map(({ id, label, icon: Icon }) => (
               <motion.button
                 key={id}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => setActiveCategory(id)}
-                className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium whitespace-nowrap transition-all flex-shrink-0 ${
+                className={`flex items-center gap-2 px-3 py-2 sm:px-4 sm:py-2 rounded-xl text-xs sm:text-sm font-medium whitespace-nowrap transition-all flex-shrink-0 ${
                   activeCategory === id
                     ? 'bg-gradient-to-r from-violet-500 to-pink-500 text-white shadow-lg shadow-violet-500/25'
                     : 'bg-white/[0.04] border border-white/[0.06] text-gray-400 hover:text-white hover:border-white/10'
                 }`}
               >
-                <Icon className="w-4 h-4" />
+                <Icon className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                 {label}
               </motion.button>
             ))}
           </div>
-          <div className="flex flex-wrap items-center gap-4">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-4">
             <div className="flex items-center gap-2">
               <span className="text-xs text-gray-500">Sort:</span>
-              {([['rating', 'Top Rated'], ['price-asc', 'Price ↑'], ['price-desc', 'Price ↓']] as const).map(([val, label]) => (
-                <button
-                  key={val}
-                  onClick={() => setSortBy(val)}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
-                    sortBy === val ? 'bg-violet-500/20 text-violet-300 border border-violet-500/30' : 'text-gray-500 hover:text-gray-300'
-                  }`}
-                >
-                  {label}
-                </button>
-              ))}
+              <div className="flex gap-2">
+                {([['rating', 'Top Rated'], ['price-asc', 'Price ↑'], ['price-desc', 'Price ↓']] as const).map(([val, label]) => (
+                  <button
+                    key={val}
+                    onClick={() => setSortBy(val)}
+                    className={`px-2 py-1 sm:px-3 sm:py-1.5 rounded-lg text-xs font-medium transition-all ${
+                      sortBy === val ? 'bg-violet-500/20 text-violet-300 border border-violet-500/30' : 'text-gray-500 hover:text-gray-300'
+                    }`}
+                  >
+                    {label}
+                  </button>
+                ))}
+              </div>
             </div>
-            <div className="flex items-center gap-3 ml-auto">
-              <span className="text-xs text-gray-500">Max price: <span className="text-white font-semibold">${maxPrice.toLocaleString()}</span></span>
+            <div className="flex items-center gap-3 sm:ml-auto">
+              <span className="text-xs text-gray-500">Max: <span className="text-white font-semibold">${maxPrice.toLocaleString()}</span></span>
               <input
                 type="range" min={500} max={3000} step={100}
                 value={maxPrice}
                 onChange={e => setMaxPrice(Number(e.target.value))}
-                className="w-32 accent-violet-500"
+                className="flex-1 sm:w-32 accent-violet-500"
               />
             </div>
           </div>
@@ -141,10 +145,10 @@ export default function DiscoverPage() {
       </div>
 
       {/* Grid */}
-      <div className="px-6 pb-24">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-sm text-gray-500 mb-6">{filtered.length} destinations found</div>
-          <motion.div layout className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      <div className="mobile-px pb-16 sm:pb-24 safe-area-bottom">
+        <div className="container-mobile">
+          <div className="text-sm text-gray-500 mb-4 sm:mb-6">{filtered.length} destinations found</div>
+          <motion.div layout className="grid-mobile-1 mobile-gap">
             <AnimatePresence>
               {filtered.map((dest, i) => (
                 <motion.div
@@ -155,9 +159,9 @@ export default function DiscoverPage() {
                   exit={{ opacity: 0, scale: 0.9 }}
                   transition={{ delay: i * 0.04 }}
                   whileHover={{ y: -6 }}
-                  className="group rounded-2xl overflow-hidden border border-white/[0.06] bg-white/[0.03] hover:border-white/10 transition-all cursor-pointer"
+                  className="group mobile-rounded overflow-hidden border border-white/[0.06] bg-white/[0.03] hover:border-white/10 transition-all cursor-pointer"
                 >
-                  <div className="relative h-48 overflow-hidden">
+                  <div className="relative h-40 sm:h-48 overflow-hidden">
                     <img src={dest.img} alt={dest.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                     <button
@@ -166,22 +170,23 @@ export default function DiscoverPage() {
                     >
                       <Heart className={`w-4 h-4 transition-colors ${liked.includes(dest.id) ? 'fill-pink-500 text-pink-500' : 'text-white'}`} />
                     </button>
-                    <div className="absolute bottom-3 left-3 flex gap-1">
+                    <div className="absolute bottom-3 left-3 flex flex-wrap gap-1">
                       {dest.tags.map(tag => (
                         <span key={tag} className="px-2 py-0.5 rounded-full bg-black/40 backdrop-blur-sm text-xs text-gray-200 border border-white/10">{tag}</span>
                       ))}
                     </div>
                   </div>
-                  <div className="p-4">
+                  <div className="p-3 sm:p-4">
                     <div className="flex items-start justify-between mb-1">
-                      <div>
-                        <h3 className="font-bold text-base group-hover:text-violet-300 transition-colors">{dest.name}</h3>
+                      <div className="flex-1 min-w-0">
+                        <h3 className="font-bold text-sm sm:text-base group-hover:text-violet-300 transition-colors truncate">{dest.name}</h3>
                         <div className="flex items-center gap-1 text-gray-400 text-xs mt-0.5">
-                          <MapPin className="w-3 h-3" /> {dest.country}
+                          <MapPin className="w-3 h-3 flex-shrink-0" /> 
+                          <span className="truncate">{dest.country}</span>
                         </div>
                       </div>
-                      <div className="text-right">
-                        <div className="text-violet-400 font-bold text-sm">from ${dest.price}</div>
+                      <div className="text-right ml-2">
+                        <div className="text-violet-400 font-bold text-xs sm:text-sm">from ${dest.price}</div>
                         <div className="text-gray-500 text-xs">per person</div>
                       </div>
                     </div>

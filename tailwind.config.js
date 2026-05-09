@@ -7,6 +7,10 @@ module.exports = {
   ],
   theme: {
     extend: {
+      screens: {
+        'xs': '475px',
+        '3xl': '1600px',
+      },
       colors: {
         primary: {
           50: '#faf5ff',
@@ -63,6 +67,11 @@ module.exports = {
       },
       transitionTimingFunction: {
         'bounce-in': 'cubic-bezier(0.34, 1.56, 0.64, 1)',
+      },
+      spacing: {
+        '18': '4.5rem',
+        '88': '22rem',
+        '128': '32rem',
       },
     },
   },

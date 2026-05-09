@@ -81,8 +81,11 @@ export default function AdaptiveBackground({ weather, activities = [], duration 
         animate={{ opacity: 1, scale: 1 }}
         exit={{ opacity: 0, scale: 0.8 }}
         transition={{ duration: 0.8 }}
-        className={`absolute top-1/4 left-1/4 rounded-full blur-3xl animate-pulse-glow ${theme.glow1}`}
-        style={{ width: glowSize, height: glowSize }}
+        className={`absolute top-1/4 left-1/4 rounded-full blur-2xl sm:blur-3xl animate-pulse-glow ${theme.glow1}`}
+        style={{ 
+          width: Math.min(glowSize, window?.innerWidth ? window.innerWidth * 0.6 : glowSize), 
+          height: Math.min(glowSize, window?.innerWidth ? window.innerWidth * 0.6 : glowSize) 
+        }}
       />
 
       {/* Secondary glow orb */}
@@ -92,8 +95,12 @@ export default function AdaptiveBackground({ weather, activities = [], duration 
         animate={{ opacity: 1, scale: 1 }}
         exit={{ opacity: 0, scale: 0.8 }}
         transition={{ duration: 0.8, delay: 0.2 }}
-        className={`absolute bottom-1/4 right-1/4 rounded-full blur-3xl animate-pulse-glow ${theme.glow2}`}
-        style={{ width: glowSize * 0.8, height: glowSize * 0.8, animationDelay: '2s' }}
+        className={`absolute bottom-1/4 right-1/4 rounded-full blur-2xl sm:blur-3xl animate-pulse-glow ${theme.glow2}`}
+        style={{ 
+          width: Math.min(glowSize * 0.8, window?.innerWidth ? window.innerWidth * 0.5 : glowSize * 0.8), 
+          height: Math.min(glowSize * 0.8, window?.innerWidth ? window.innerWidth * 0.5 : glowSize * 0.8), 
+          animationDelay: '2s' 
+        }}
       />
 
       {/* Activity accent layer */}
@@ -118,13 +125,13 @@ export default function AdaptiveBackground({ weather, activities = [], duration 
           exit={{ opacity: 0 }}
           className="absolute inset-0 opacity-20"
         >
-          {[...Array(20)].map((_, i) => (
+          {[...Array(window?.innerWidth && window.innerWidth < 768 ? 10 : 20)].map((_, i) => (
             <motion.div
               key={i}
               className="absolute w-px bg-gradient-to-b from-transparent via-blue-400/30 to-transparent"
               style={{
-                left: `${(i * 5) % 100}%`,
-                height: '100px',
+                left: `${(i * 10) % 100}%`,
+                height: window?.innerWidth && window.innerWidth < 768 ? '60px' : '100px',
               }}
               animate={{
                 y: ['0vh', '100vh'],

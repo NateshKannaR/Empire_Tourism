@@ -190,28 +190,28 @@ export default function PlannerPage() {
 
 
   return (
-    <main className="min-h-screen relative overflow-hidden">
+    <main className="min-h-screen relative overflow-hidden safe-area-top">
       <AdaptiveBackground weather={weather} activities={activities} duration={duration} />
 
-      <div className="pt-40 pb-32 px-8 max-w-[1400px] mx-auto">
+      <div className="pt-20 sm:pt-32 lg:pt-40 pb-16 sm:pb-24 lg:pb-32 mobile-px container-mobile">
         {/* Hero Title */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="mb-20 text-center"
+          className="mb-12 sm:mb-16 lg:mb-20 text-center"
         >
           <motion.div
             initial={{ scale: 0.9, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ delay: 0.2, duration: 0.6 }}
-            className="inline-flex items-center gap-2 px-4 py-2 glass rounded-full mb-8"
+            className="inline-flex items-center gap-2 px-3 py-2 sm:px-4 sm:py-2 glass mobile-rounded mb-6 sm:mb-8"
           >
-            <Sparkles className="w-4 h-4 text-primary-400" />
-            <span className="text-sm text-primary-300">AI-Powered Intelligence</span>
+            <Sparkles className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-primary-400" />
+            <span className="text-xs sm:text-sm text-primary-300">AI-Powered Intelligence</span>
           </motion.div>
           
-          <h1 className="text-7xl md:text-8xl font-bold mb-6 leading-tight">
+          <h1 className="mobile-text-4xl font-bold mb-4 sm:mb-6 leading-tight">
             <motion.span
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -233,23 +233,23 @@ export default function PlannerPage() {
             initial={{ scaleX: 0 }}
             animate={{ scaleX: 1 }}
             transition={{ delay: 0.8, duration: 0.8 }}
-            className="h-1 w-64 mx-auto bg-gradient-to-r from-transparent via-primary-500 to-transparent rounded-full glow"
+            className="h-1 w-32 sm:w-48 lg:w-64 mx-auto bg-gradient-to-r from-transparent via-primary-500 to-transparent rounded-full glow"
           />
         </motion.div>
 
         {/* Main Content Grid */}
-        <div className="grid lg:grid-cols-2 gap-12 items-start">
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start">
           {/* Left Column - Inputs */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.4, duration: 0.8 }}
-            className="space-y-10"
+            className="mobile-space-y"
           >
             {/* Destination */}
             <div>
-              <label className="flex items-center gap-3 text-lg font-medium text-gray-300 mb-4">
-                <MapPin className="w-5 h-5 text-primary-400" />
+              <label className="flex items-center gap-3 mobile-text-lg font-medium text-gray-300 mb-3 sm:mb-4">
+                <MapPin className="w-4 h-4 sm:w-5 sm:h-5 text-primary-400" />
                 Destination
               </label>
               <div className="relative">
@@ -292,11 +292,11 @@ export default function PlannerPage() {
                     }
                   }}
                   placeholder="Where are you heading?"
-                  className="w-full px-6 py-5 glass rounded-2xl focus:outline-none focus:glow transition-all text-xl text-gray-100 placeholder-gray-500"
+                  className="input-mobile mobile-text-lg"
                 />
                 {loadingWeather && (
                   <div className="absolute right-4 top-1/2 -translate-y-1/2">
-                    <motion.div animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 1 }} className="w-6 h-6 border-2 border-primary-500/20 border-t-primary-500 rounded-full" />
+                    <motion.div animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 1 }} className="w-5 h-5 sm:w-6 sm:h-6 border-2 border-primary-500/20 border-t-primary-500 rounded-full" />
                   </div>
                 )}
               </div>
@@ -304,18 +304,18 @@ export default function PlannerPage() {
                 <motion.div 
                   initial={{ opacity: 0, y: -10 }} 
                   animate={{ opacity: 1, y: 0 }} 
-                  className="mt-6"
+                  className="mt-4 sm:mt-6"
                 >
-                  <div className="glass rounded-2xl p-6">
-                    <div className="flex items-center justify-between mb-4">
+                  <div className="glass mobile-rounded mobile-p">
+                    <div className="flex items-center justify-between mb-3 sm:mb-4">
                       <div>
-                        <div className="font-semibold text-lg">{weatherData.city}, {weatherData.country}</div>
-                        <div className="text-sm text-gray-400">Real-time weather data</div>
+                        <div className="font-semibold text-base sm:text-lg">{weatherData.city}, {weatherData.country}</div>
+                        <div className="text-xs sm:text-sm text-gray-400">Real-time weather data</div>
                       </div>
                       <img 
                         src={`https://openweathermap.org/img/wn/${weatherData.icon}@2x.png`} 
                         alt="weather" 
-                        className="w-16 h-16" 
+                        className="w-12 h-12 sm:w-16 sm:h-16" 
                       />
                     </div>
                     
