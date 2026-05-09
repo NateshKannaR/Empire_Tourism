@@ -61,9 +61,20 @@ export default function Navigation() {
         </div>
 
         {/* Mobile toggle */}
-        <button className="lg:hidden text-gray-400" onClick={() => setOpen(!open)}>
-          {open ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-        </button>
+        <div className="flex items-center gap-3">
+          <Link href="/booking">
+            <motion.button
+              whileHover={{ scale: 1.04 }}
+              whileTap={{ scale: 0.96 }}
+              className="hidden md:flex items-center gap-1.5 px-4 py-2 rounded-xl bg-gradient-to-r from-violet-500 to-pink-500 text-white text-xs font-semibold shadow-lg shadow-violet-500/25"
+            >
+              <Plane className="w-3.5 h-3.5" /> Book Now
+            </motion.button>
+          </Link>
+          <button className="lg:hidden text-gray-400" onClick={() => setOpen(!open)}>
+            {open ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+          </button>
+        </div>
       </div>
 
       <AnimatePresence>

@@ -2,7 +2,7 @@
 
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import Link from 'next/link';
-import { Globe, Plane, Map, Users, Star, Navigation, Wallet, Rss, ArrowRight, Search, TrendingUp, Shield, Zap } from 'lucide-react';
+import { Globe, Plane, Map, Users, Star, Navigation, Wallet, Rss, ArrowRight, Search, TrendingUp, Shield, Zap, Github, Twitter, Instagram } from 'lucide-react';
 
 const features = [
   { icon: Globe,      label: 'Discover',   desc: 'Browse 10,000+ destinations',     href: '/discover',  color: 'from-violet-500 to-purple-600' },
@@ -16,8 +16,21 @@ const features = [
 ];
 
 const trending = [
-  { name: 'Bali',      country: 'Indonesia', img: 'https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=600&q=80', tag: '⭐ Top Rated' },
-  { name: 'Patagonia', country: 'Argentina', img: 'https://images.unsplash.com/photo-1501854140801-50d01698950b?w=600&q=80', tag: '🏔️ Adventure' },
+  { name: 'Bali',       country: 'Indonesia', img: 'https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=600&q=80', tag: '⭐ Top Rated' },
+  { name: 'Patagonia',  country: 'Argentina', img: 'https://images.unsplash.com/photo-1501854140801-50d01698950b?w=600&q=80', tag: '🏔️ Adventure' },
+  { name: 'Santorini',  country: 'Greece',    img: 'https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?w=600&q=80', tag: '🌅 Romantic' },
+  { name: 'Kyoto',      country: 'Japan',     img: 'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=600&q=80', tag: '🏯 Culture' },
+];
+
+const testimonials = [
+  { name: 'Sarah M.', role: 'Solo Traveler', avatar: 'SM', text: 'Planned my entire Southeast Asia trip in under an hour. The itinerary builder is insanely good!', rating: 5 },
+  { name: 'James K.', role: 'Digital Nomad', avatar: 'JK', text: 'Budget tracker saved me from overspending in Tokyo. Real-time alerts are a game changer.', rating: 5 },
+  { name: 'Priya R.', role: 'Family Traveler', avatar: 'PR', text: 'Found the perfect Bali package for our family. Booking was seamless and the price was unbeatable.', rating: 5 },
+];
+
+const marqueeDestinations = [
+  'Paris', 'Tokyo', 'Bali', 'New York', 'Santorini', 'Kyoto', 'Maldives', 'Patagonia',
+  'Amalfi Coast', 'Banff', 'Machu Picchu', 'Dolomites', 'Amazon', 'Dubai', 'Iceland', 'Lisbon',
 ];
 
 const stats = [
@@ -220,6 +233,61 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Marquee strip */}
+      <section className="py-10 overflow-hidden border-y border-white/[0.04] bg-white/[0.01]">
+        <div className="flex">
+          <div className="destination-marquee flex gap-8 items-center">
+            {[...marqueeDestinations, ...marqueeDestinations].map((d, i) => (
+              <span key={i} className="flex items-center gap-3 text-gray-500 text-sm font-medium whitespace-nowrap">
+                <span className="w-1.5 h-1.5 rounded-full bg-violet-500/60" />
+                {d}
+              </span>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials */}
+      <section className="py-24 px-6">
+        <div className="max-w-7xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-14"
+          >
+            <h2 className="text-4xl font-black mb-3">Loved by <span className="bg-gradient-to-r from-violet-400 to-pink-400 bg-clip-text text-transparent">travelers</span></h2>
+            <p className="text-gray-400">Real stories from real adventurers</p>
+          </motion.div>
+          <div className="grid md:grid-cols-3 gap-6">
+            {testimonials.map((t, i) => (
+              <motion.div
+                key={t.name}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+                className="rounded-2xl border border-white/[0.06] bg-white/[0.03] p-6 hover:border-white/10 transition-all"
+              >
+                <div className="flex gap-0.5 mb-4">
+                  {Array.from({ length: t.rating }).map((_, j) => (
+                    <Star key={j} className="w-4 h-4 fill-amber-400 text-amber-400" />
+                  ))}
+                </div>
+                <p className="text-gray-300 text-sm leading-relaxed mb-5">&ldquo;{t.text}&rdquo;</p>
+                <div className="flex items-center gap-3">
+                  <div className="w-9 h-9 rounded-full bg-gradient-to-br from-violet-500 to-pink-500 flex items-center justify-center text-xs font-bold">{t.avatar}</div>
+                  <div>
+                    <div className="font-semibold text-sm">{t.name}</div>
+                    <div className="text-xs text-gray-500">{t.role}</div>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* CTA */}
       <section className="py-32 px-6">
         <div className="max-w-4xl mx-auto text-center">
@@ -262,6 +330,27 @@ export default function HomePage() {
           </motion.div>
         </div>
       </section>
+      {/* Footer */}
+      <footer className="border-t border-white/[0.06] py-12 px-6">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+            <div className="flex items-center gap-2">
+              <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-violet-500 to-pink-500 flex items-center justify-center">
+                <Globe className="w-4 h-4 text-white" />
+              </div>
+              <span className="font-bold bg-gradient-to-r from-violet-400 to-pink-400 bg-clip-text text-transparent">Travr</span>
+            </div>
+            <p className="text-gray-600 text-sm">© 2025 Travr. Built for explorers, by explorers.</p>
+            <div className="flex items-center gap-4">
+              {[Twitter, Instagram, Github].map((Icon, i) => (
+                <button key={i} className="w-8 h-8 rounded-lg bg-white/[0.04] border border-white/[0.06] flex items-center justify-center text-gray-500 hover:text-white hover:border-white/10 transition-all">
+                  <Icon className="w-4 h-4" />
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      </footer>
     </main>
   );
 }

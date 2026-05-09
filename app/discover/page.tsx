@@ -32,12 +32,20 @@ export default function DiscoverPage() {
   const [query, setQuery] = useState('');
   const [activeCategory, setActiveCategory] = useState('all');
   const [liked, setLiked] = useState<number[]>([]);
+  const [sortBy, setSortBy] = useState<'rating' | 'price-asc' | 'price-desc'>('rating');
+  const [maxPrice, setMaxPrice] = useState(3000);
 
-  const filtered = destinations.filter(d => {
-    const matchCat = activeCategory === 'all' || d.category === activeCategory;
-    const matchQ = d.name.toLowerCase().includes(query.toLowerCase()) || d.country.toLowerCase().includes(query.toLowerCase());
-    return matchCat && matchQ;
-  });
+  const filtered = destinations
+    .filter(d => {
+      const matchCat = activeCategory === 'all' || d.category === activeCategory;
+      const matchQ = d.name.toLowerCase().includes(query.toLowerCase()) || d.country.toLowerCase().includes(query.toLowerCase());
+      return matchCat && matchQ && d.price <= maxPrice;
+    })
+    .sort((a, b) => {
+      if (sortBy === 'rating') return b.rating - a.rating;
+      if (sortBy === 'price-asc') return a.price - b.price;
+      return b.price - a.price;
+    });
 
   return (
     <main className="min-h-screen pt-16 bg-[#030712]">
@@ -83,25 +91,52 @@ export default function DiscoverPage() {
         </div>
       </div>
 
-      {/* Categories */}
+      {/* Categories + Sort */}
       <div className="px-6 mb-8">
-        <div className="max-w-7xl mx-auto flex gap-3 overflow-x-auto no-scrollbar pb-2">
-          {categories.map(({ id, label, icon: Icon }) => (
-            <motion.button
-              key={id}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => setActiveCategory(id)}
-              className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium whitespace-nowrap transition-all flex-shrink-0 ${
-                activeCategory === id
-                  ? 'bg-gradient-to-r from-violet-500 to-pink-500 text-white shadow-lg shadow-violet-500/25'
-                  : 'bg-white/[0.04] border border-white/[0.06] text-gray-400 hover:text-white hover:border-white/10'
-              }`}
-            >
-              <Icon className="w-4 h-4" />
-              {label}
-            </motion.button>
-          ))}
+        <div className="max-w-7xl mx-auto space-y-4">
+          <div className="flex gap-3 overflow-x-auto no-scrollbar pb-2">
+            {categories.map(({ id, label, icon: Icon }) => (
+              <motion.button
+                key={id}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => setActiveCategory(id)}
+                className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium whitespace-nowrap transition-all flex-shrink-0 ${
+                  activeCategory === id
+                    ? 'bg-gradient-to-r from-violet-500 to-pink-500 text-white shadow-lg shadow-violet-500/25'
+                    : 'bg-white/[0.04] border border-white/[0.06] text-gray-400 hover:text-white hover:border-white/10'
+                }`}
+              >
+                <Icon className="w-4 h-4" />
+                {label}
+              </motion.button>
+            ))}
+          </div>
+          <div className="flex flex-wrap items-center gap-4">
+            <div className="flex items-center gap-2">
+              <span className="text-xs text-gray-500">Sort:</span>
+              {([['rating', 'Top Rated'], ['price-asc', 'Price ↑'], ['price-desc', 'Price ↓']] as const).map(([val, label]) => (
+                <button
+                  key={val}
+                  onClick={() => setSortBy(val)}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
+                    sortBy === val ? 'bg-violet-500/20 text-violet-300 border border-violet-500/30' : 'text-gray-500 hover:text-gray-300'
+                  }`}
+                >
+                  {label}
+                </button>
+              ))}
+            </div>
+            <div className="flex items-center gap-3 ml-auto">
+              <span className="text-xs text-gray-500">Max price: <span className="text-white font-semibold">${maxPrice.toLocaleString()}</span></span>
+              <input
+                type="range" min={500} max={3000} step={100}
+                value={maxPrice}
+                onChange={e => setMaxPrice(Number(e.target.value))}
+                className="w-32 accent-violet-500"
+              />
+            </div>
+          </div>
         </div>
       </div>
 
