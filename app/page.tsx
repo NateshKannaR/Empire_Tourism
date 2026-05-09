@@ -2,11 +2,11 @@
 
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import Link from 'next/link';
-import { Globe, Plane, Map, Users, Star, Navigation, Wallet, Rss, ArrowRight, Search, TrendingUp, Shield, Zap, Github, Twitter, Instagram } from 'lucide-react';
+import { Globe, Package, Map, Users, Star, Navigation, Wallet, Rss, ArrowRight, Search, TrendingUp, Shield, Zap, Github, Twitter, Instagram } from 'lucide-react';
 
 const features = [
   { icon: Globe,      label: 'Discover',   desc: 'Browse 10,000+ destinations',     href: '/discover',  color: 'from-violet-500 to-purple-600' },
-  { icon: Plane,      label: 'Booking',    desc: 'Flights, hotels & packages',       href: '/booking',   color: 'from-blue-500 to-cyan-500' },
+  { icon: Package,    label: 'Packages',   desc: 'Curated travel packages',          href: '/packages',  color: 'from-blue-500 to-cyan-500' },
   { icon: Map,        label: 'Itinerary',  desc: 'Day-by-day trip planning',         href: '/itinerary', color: 'from-emerald-500 to-teal-500' },
   { icon: Rss,        label: 'Feed',       desc: 'Travel stories from the world',    href: '/feed',      color: 'from-orange-500 to-amber-500' },
   { icon: Star,       label: 'Reviews',    desc: 'Honest ratings & reviews',         href: '/reviews',   color: 'from-yellow-500 to-orange-500' },

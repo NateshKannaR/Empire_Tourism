@@ -3,12 +3,12 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, Globe, Plane, Map, Users, Star, Navigation as NavIcon, Wallet, Rss } from 'lucide-react';
+import { Menu, X, Globe, Package, Map, Users, Star, Navigation as NavIcon, Wallet, Rss } from 'lucide-react';
 import { useState } from 'react';
 
 const links = [
   { href: '/discover',   label: 'Discover',   icon: Globe },
-  { href: '/booking',    label: 'Booking',    icon: Plane },
+  { href: '/packages',   label: 'Packages',   icon: Package },
   { href: '/itinerary',  label: 'Itinerary',  icon: Map },
   { href: '/feed',       label: 'Feed',       icon: Rss },
   { href: '/reviews',    label: 'Reviews',    icon: Star },
@@ -62,14 +62,14 @@ export default function Navigation() {
 
         {/* Mobile toggle + CTA */}
         <div className="flex items-center gap-2 sm:gap-3">
-          <Link href="/booking" className="hidden sm:block">
+          <Link href="/packages" className="hidden sm:block">
             <motion.button
               whileHover={{ scale: 1.04 }}
               whileTap={{ scale: 0.96 }}
               className="btn-mobile bg-gradient-to-r from-violet-500 to-pink-500 text-white shadow-lg shadow-violet-500/25"
             >
-              <Plane className="w-3.5 h-3.5" /> 
-              <span className="hidden md:inline">Book Now</span>
+              <Package className="w-3.5 h-3.5" /> 
+              <span className="hidden md:inline">Packages</span>
             </motion.button>
           </Link>
           
@@ -122,12 +122,12 @@ export default function Navigation() {
                 
                 {/* Mobile CTA */}
                 <div className="pt-3 mt-3 border-t border-white/10">
-                  <Link href="/booking" onClick={() => setOpen(false)}>
+                  <Link href="/packages" onClick={() => setOpen(false)}>
                     <motion.button
                       whileTap={{ scale: 0.96 }}
                       className="w-full btn-mobile bg-gradient-to-r from-violet-500 to-pink-500 text-white shadow-lg shadow-violet-500/25"
                     >
-                      <Plane className="w-4 h-4" /> Book Your Trip
+                      <Package className="w-4 h-4" /> View Packages
                     </motion.button>
                   </Link>
                 </div>
